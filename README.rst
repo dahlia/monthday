@@ -1,6 +1,10 @@
 monthday
 ========
 
+.. image:: https://badge.fury.io/py/monthday.svg
+   :alt: PyPI
+   :target: https://pypi.python.org/pypi/monthday
+
 .. image:: https://readthedocs.org/projects/monthday/badge/
    :alt: Read the Docs
    :target: https://monthday.readthedocs.org/
@@ -33,9 +37,16 @@ Works on Python 2.6, 2.7, 3.2--3.5, PyPy, PyPy3.
    >>> MonthDay.from_date(date(2015, 12, 25))
    monthday.MonthDay(12, 25)
 
+It's available on PyPI__:
+
+.. code-block:: console
+
+   $ pip install monthday
+
 Written by `Hong Minhee`__, and distributed under LGPLv3_ or later.
 Find the source code from the `GitHub repository`__.
 
+__ https://pypi.python.org/pypi/monthday
 __ http://hongminhee.org/
 .. _LGPLv3: http://www.gnu.org/licenses/lgpl-3.0.html
 __ https://github.com/dahlia/monthday

@@ -1,4 +1,7 @@
-from distutils.core import setup
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
 from monthday import __version__ as version
 
@@ -22,7 +25,7 @@ setup(
     url='https://monthday.readthedocs.org/',
     py_modules=['monthday'],
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved'
         ' :: GNU Lesser General Public License v3 or later (LGPLv3+)',
