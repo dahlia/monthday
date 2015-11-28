@@ -87,8 +87,10 @@ class MonthDay(object):
                            while it's ``MonthDay(2, 29)``
 
         """
+        if not isinstance(year, numbers.Integral):
+            raise TypeError('year must be an integer, not ' + repr(year))
         try:
-            return datetime.date(year, self.month, self.day)
+            return datetime.date(int(year), self.month, self.day)
         except ValueError:
             if self.month == 2 and self.day == 29:
                 raise ValueError("since {0!r} is not a leap year, {1!r} can't "

@@ -124,6 +124,8 @@ MonthDay(2, 29) can't be combined with 2015'''
     assert feb_29.date(2012) == datetime.date(2012, 2, 29)
     with raises(ValueError):
         feb_29.date(2011)
+    with raises(TypeError):
+        aug_4.date('1988')
 
 
 def test_month_day_str(aug_4, dec_25):
