@@ -6,13 +6,22 @@ python:
 - 3.2
 - 3.3
 - 3.4
+- 3.5
 - pypy
 - pypy3
 install:
-- pip install codecov flake8 pytest pytest-cov pytest-sugar
+- pip install flake8 pytest pytest-sugar
+- >
+    if [[ "$TRAVIS_PYTHON_VERSION" != "3.2" ]]; then
+      pip install codecov 'pytest-cov>=1.8.0';
+      export PYTEST_COV="--cov monthday"
+    fi
 - pip install -e .
 script:
-- py.test --cov monthday --doctest-glob='*.rst' --durations=5
+- py.test $PYTEST_COV --doctest-glob='*.rst' --durations=5
 - flake8 .
 after_success:
-- codecov
+- >
+    if [[ "$TRAVIS_PYTHON_VERSION" != "3.2" ]]; then
+      codecov
+    fi
