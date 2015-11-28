@@ -1,14 +1,24 @@
 import datetime
 
-from pytest import raises
+from pytest import fixture, raises
 
 from monthday import MonthDay
 
 
-def test_month_day_from_date():
-    assert MonthDay.from_date(datetime.date(1988, 8, 4)) == MonthDay(8, 4)
-    assert MonthDay.from_date(datetime.date(2015, 12, 25)) == MonthDay(12, 25)
-    assert MonthDay.from_date(datetime.datetime(1988, 8, 4)) == MonthDay(8, 4)
+@fixture
+def aug_4():
+    return MonthDay(8, 4)
+
+
+@fixture
+def dec_25():
+    return MonthDay(12, 25)
+
+
+def test_month_day_from_date(aug_4, dec_25):
+    assert MonthDay.from_date(datetime.date(1988, 8, 4)) == aug_4
+    assert MonthDay.from_date(datetime.date(2015, 12, 25)) == dec_25
+    assert MonthDay.from_date(datetime.datetime(1988, 8, 4)) == aug_4
 
 
 def test_month_day_from_date_type_error():
@@ -78,29 +88,29 @@ def test_month_day_init_type_error():
         MonthDay(8, 4.0)
 
 
-def test_month_day_equality():
-    assert MonthDay(8, 4) == MonthDay(8, 4)
-    assert not MonthDay(8, 4) != MonthDay(8, 4)
-    assert hash(MonthDay(8, 4)) == hash(MonthDay(8, 4))
-    assert MonthDay(12, 25) == MonthDay(12, 25)
-    assert not MonthDay(12, 25) != MonthDay(12, 25)
-    assert hash(MonthDay(12, 25)) == hash(MonthDay(12, 25))
-    assert MonthDay(8, 4) != MonthDay(8, 5)
-    assert not MonthDay(8, 4) == MonthDay(8, 5)
-    assert hash(MonthDay(8, 4)) != hash(MonthDay(8, 5))
-    assert MonthDay(8, 4) != MonthDay(12, 25)
-    assert not MonthDay(8, 4) == MonthDay(12, 25)
-    assert hash(MonthDay(8, 4)) != hash(MonthDay(12, 25))
-    assert MonthDay(12, 25) != MonthDay(12, 24)
-    assert not MonthDay(12, 25) == MonthDay(12, 24)
-    assert hash(MonthDay(12, 25)) != hash(MonthDay(12, 24))
-    assert MonthDay(12, 25) != MonthDay(8, 4)
-    assert not MonthDay(12, 25) == MonthDay(8, 4)
-    assert hash(MonthDay(12, 25)) != hash(MonthDay(8, 4))
+def test_month_day_equality(aug_4, dec_25):
+    assert aug_4 == MonthDay(8, 4)
+    assert not aug_4 != MonthDay(8, 4)
+    assert hash(aug_4) == hash(MonthDay(8, 4))
+    assert dec_25 == MonthDay(12, 25)
+    assert not dec_25 != MonthDay(12, 25)
+    assert hash(dec_25) == hash(MonthDay(12, 25))
+    assert aug_4 != MonthDay(8, 5)
+    assert not aug_4 == MonthDay(8, 5)
+    assert hash(aug_4) != hash(MonthDay(8, 5))
+    assert aug_4 != dec_25
+    assert not aug_4 == dec_25
+    assert hash(aug_4) != hash(dec_25)
+    assert dec_25 != MonthDay(12, 24)
+    assert not dec_25 == MonthDay(12, 24)
+    assert hash(dec_25) != hash(MonthDay(12, 24))
+    assert dec_25 != aug_4
+    assert not dec_25 == aug_4
+    assert hash(dec_25) != hash(aug_4)
 
 
-def test_month_day_date():
-    assert MonthDay(8, 4).date(1988) == datetime.date(1988, 8, 4)
+def test_month_day_date(aug_4):
+    assert aug_4.date(1988) == datetime.date(1988, 8, 4)
     feb_29 = MonthDay(2, 29)
     assert feb_29.date(2016) == datetime.date(2016, 2, 29)
     with raises(ValueError) as excinfo:
@@ -116,11 +126,11 @@ MonthDay(2, 29) can't be combined with 2015'''
         feb_29.date(2011)
 
 
-def test_month_day_str():
-    assert str(MonthDay(8, 4)) == '08-04'
-    assert str(MonthDay(12, 25)) == '12-25'
+def test_month_day_str(aug_4, dec_25):
+    assert str(aug_4) == '08-04'
+    assert str(dec_25) == '12-25'
 
 
-def test_month_day_repr():
-    assert repr(MonthDay(8, 4)) == 'monthday.MonthDay(8, 4)'
-    assert repr(MonthDay(12, 25)) == 'monthday.MonthDay(12, 25)'
+def test_month_day_repr(aug_4, dec_25):
+    assert repr(aug_4) == 'monthday.MonthDay(8, 4)'
+    assert repr(dec_25) == 'monthday.MonthDay(12, 25)'
