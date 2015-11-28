@@ -1,4 +1,5 @@
 import datetime
+import pickle
 
 from pytest import fixture, raises
 
@@ -143,7 +144,7 @@ def test_month_day_dates(aug_4, feb_29):
         datetime.date(1990, 8, 4),
         datetime.date(1991, 8, 4),
     ]
-    years = range(2010, 2017)
+    years = range(2011, 2017)
     with raises(ValueError):
         list(feb_29.dates(years))
     with raises(ValueError):
@@ -152,7 +153,7 @@ def test_month_day_dates(aug_4, feb_29):
         datetime.date(2012, 2, 29), datetime.date(2016, 2, 29),
     ]
     assert list(feb_29.dates(years, error_invalid_dates=None)) == [
-        None, None, datetime.date(2012, 2, 29),
+        None, datetime.date(2012, 2, 29),
         None, None, None, datetime.date(2016, 2, 29),
     ]
     with raises(TypeError):
@@ -167,3 +168,8 @@ def test_month_day_str(aug_4, dec_25):
 def test_month_day_repr(aug_4, dec_25):
     assert repr(aug_4) == 'monthday.MonthDay(8, 4)'
     assert repr(dec_25) == 'monthday.MonthDay(12, 25)'
+
+
+def test_month_day_pickle(aug_4, dec_25):
+    assert pickle.loads(pickle.dumps(aug_4)) == aug_4
+    assert pickle.loads(pickle.dumps(dec_25)) == dec_25

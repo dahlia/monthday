@@ -30,6 +30,8 @@ class MonthDay(object):
 
     """
 
+    __slots__ = 'month', 'day'
+
     @classmethod
     def from_date(cls, date):
         """Get only :class:`MonthDay` from the given ``date``.
@@ -181,6 +183,12 @@ class MonthDay(object):
                     elif error_invalid_dates is None:
                         yield None
         return generate()
+
+    def __getstate__(self):
+        return self.month, self.day
+
+    def __setstate__(self, state):
+        self.month, self.day = state
 
     def __str__(self):
         return '{0:02d}-{1:02d}'.format(self.month, self.day)
