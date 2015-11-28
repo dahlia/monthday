@@ -20,6 +20,10 @@ year.  It is useful for dealing with birthdays, or anniversaries.
    monthday.MonthDay(8, 4)
    >>> aug_4.date(1988)
    datetime.date(1988, 8, 4)
+   >>> list(aug_4.dates(range(2013, 2016)))
+   [datetime.date(2013, 8, 4),
+    datetime.date(2014, 8, 4),
+    datetime.date(2015, 8, 4)]
    >>> from datetime import date
    >>> MonthDay.from_date(date(2015, 12, 25))
    monthday.MonthDay(12, 25)

@@ -128,6 +128,18 @@ MonthDay(2, 29) can't be combined with 2015'''
         aug_4.date('1988')
 
 
+def test_month_day_dates(aug_4):
+    assert list(aug_4.dates([])) == []
+    assert list(aug_4.dates(range(1988, 1992))) == [
+        datetime.date(1988, 8, 4),
+        datetime.date(1989, 8, 4),
+        datetime.date(1990, 8, 4),
+        datetime.date(1991, 8, 4),
+    ]
+    with raises(TypeError):
+        aug_4.dates(1988)
+
+
 def test_month_day_str(aug_4, dec_25):
     assert str(aug_4) == '08-04'
     assert str(dec_25) == '12-25'

@@ -18,7 +18,7 @@ install:
     fi
 - pip install -e .
 script:
-- py.test $PYTEST_COV --doctest-glob='*.rst' --durations=5
+- py.test $PYTEST_COV --durations=5
 - flake8 .
 after_success:
 - >

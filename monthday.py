@@ -2,6 +2,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """
+import collections
 import datetime
 import numbers
 
@@ -96,6 +97,26 @@ class MonthDay(object):
                 raise ValueError("since {0!r} is not a leap year, {1!r} can't "
                                  "be combined with {0!r}".format(year, self))
             raise
+
+    def dates(self, years):
+        """Get :class:`~datetime.date`\ s by combining the given ``years``
+        with it.
+
+        >>> list(MonthDay(8, 4).dates(range(1988, 1992)))
+        [datetime.date(1988, 8, 4), datetime.date(1989, 8, 4),
+         datetime.date(1990, 8, 4), datetime.date(1991, 8, 4)]
+
+        :param years: years to combine with
+        :type years: :class:`~collections.abc.Iterable`
+        :return: :class:`datetime.date` values with the given ``years``.
+                 the order corresponds to the input ``years``' order
+        :rtype: :class:`~collections.abc.Iterable`
+        :raise TypeError: if ``years`` is not iterable of integers
+
+        """
+        if not isinstance(years, collections.Iterable):
+            raise TypeError('years must be iterable, not ' + repr(years))
+        return (self.date(year) for year in years)
 
     def __str__(self):
         return '{0:02d}-{1:02d}'.format(self.month, self.day)
