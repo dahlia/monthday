@@ -4,4 +4,5 @@
 .coverage
 .tox/
 __pycache__/
+docs/_build/
 MANIFEST

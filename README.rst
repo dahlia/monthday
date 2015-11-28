@@ -1,5 +1,9 @@
-``monthday``
-============
+monthday
+========
+
+.. image:: https://readthedocs.org/projects/monthday/badge/
+   :alt: Read the Docs
+   :target: https://monthday.readthedocs.org/
 
 .. image:: https://travis-ci.org/dahlia/monthday.svg?branch=master
    :alt: Build Status
@@ -11,6 +15,7 @@
 
 This package provides the ``MonthDay`` value type for dealing dates without
 year.  It is useful for dealing with birthdays, or anniversaries.
+Works on Python 2.6, 2.7, 3.2--3.5, PyPy, PyPy3.
 
 .. code-block:: pycon
 
@@ -29,6 +34,8 @@ year.  It is useful for dealing with birthdays, or anniversaries.
    monthday.MonthDay(12, 25)
 
 Written by `Hong Minhee`__, and distributed under LGPLv3_ or later.
+Find the source code from the `GitHub repository`__.
 
 __ http://hongminhee.org/
 .. _LGPLv3: http://www.gnu.org/licenses/lgpl-3.0.html
+__ https://github.com/dahlia/monthday

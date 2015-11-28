@@ -19,6 +19,7 @@ setup(
     license='LGPLv3+',
     author='Hong Minhee',
     author_email='hongminhee' '@' 'member.fsf.org',
+    url='https://monthday.readthedocs.org/',
     py_modules=['monthday'],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
