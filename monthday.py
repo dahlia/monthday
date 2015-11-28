@@ -113,7 +113,7 @@ class MonthDay(object):
                                  "be combined with {0!r}".format(year, self))
             raise
 
-    def dates(self, years):
+    def dates(self, years, error_invalid_dates=True):
         """Get :class:`~datetime.date`\ s by combining the given ``years``
         with it.
 
@@ -121,17 +121,66 @@ class MonthDay(object):
         [datetime.date(1988, 8, 4), datetime.date(1989, 8, 4),
          datetime.date(1990, 8, 4), datetime.date(1991, 8, 4)]
 
+        It may raise :exc:`ValueError` if there happen to be any invalid
+        dates in the result, e.g. Feburary 29 for non-leap years:
+
+        >>> feb_29 = MonthDay(2, 29)
+        >>> list(feb_29.dates(range(2011, 2017)))
+        Traceback (most recent call last):
+          ...
+        ValueError: since 2010 is not a leap year,
+                    monthday.MonthDay(2, 29) can't be combined with 2010
+
+        If you want to simply ignore these invalid dates in the result,
+        set ``error_invalid_dates`` to :const:`False` e.g.:
+
+        >>> list(feb_29.dates(range(2011, 2017), error_invalid_dates=False))
+        [datetime.date(2012, 2, 29), datetime.date(2016, 2, 29)]
+
+        But the result length might be shorter than the input ``years`` list.
+
+        If you want to match the length of the input and the result, set
+        ``error_invalid_dates`` to :const:`None` --- it will replace invalid
+        dates in the result with :const:`None` values e.g.:
+
+        >>> list(feb_29.dates(range(2011, 2017), error_invalid_dates=None))
+        [None, datetime.date(2012, 2, 29),
+         None, None, None, datetime.date(2016, 2, 29)]
+
         :param years: years to combine with
         :type years: :class:`~collections.abc.Iterable`
+        :param error_invalid_dates: if set to :const:`True`, raise
+                                    :exc:`ValueError` for invalid dates.
+                                    if set to :const:`False`, just ignore
+                                    invalid dates --- the result length might
+                                    be shorter than the input ``years`` list.
+                                    if set to :const:`None`, fill :const:`None`
+                                    values instead of invalid dates --- the
+                                    result length must be the same to the input
+                                    ``year`` list.  :const:`True` by default
+        :type error_invalid_dates: :class:`bool`, ``type(None)``
         :return: :class:`datetime.date` values with the given ``years``.
                  the order corresponds to the input ``years``' order
         :rtype: :class:`~collections.abc.Iterable`
+        :raise ValueError: if ``error_invalid_dates`` is set to :const:`True`
+                           and there happend to be any invalid dates in
+                           the result
         :raise TypeError: if ``years`` is not iterable of integers
 
         """
         if not isinstance(years, collections.Iterable):
             raise TypeError('years must be iterable, not ' + repr(years))
-        return (self.date(year) for year in years)
+
+        def generate():
+            for year in years:
+                try:
+                    yield self.date(year)
+                except ValueError:
+                    if error_invalid_dates:
+                        raise
+                    elif error_invalid_dates is None:
+                        yield None
+        return generate()
 
     def __str__(self):
         return '{0:02d}-{1:02d}'.format(self.month, self.day)

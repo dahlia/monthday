@@ -6,12 +6,20 @@ from monthday import MonthDay
 
 
 @fixture
+def feb_29():
+    """February 29.  Only available for leap years."""
+    return MonthDay(2, 29)
+
+
+@fixture
 def aug_4():
+    """August 4.  Author's birthday."""
     return MonthDay(8, 4)
 
 
 @fixture
 def dec_25():
+    """December 25.  Christmas."""
     return MonthDay(12, 25)
 
 
@@ -109,9 +117,8 @@ def test_month_day_equality(aug_4, dec_25):
     assert hash(dec_25) != hash(aug_4)
 
 
-def test_month_day_date(aug_4):
+def test_month_day_date(aug_4, feb_29):
     assert aug_4.date(1988) == datetime.date(1988, 8, 4)
-    feb_29 = MonthDay(2, 29)
     assert feb_29.date(2016) == datetime.date(2016, 2, 29)
     with raises(ValueError) as excinfo:
         feb_29.date(2015)
@@ -128,13 +135,25 @@ MonthDay(2, 29) can't be combined with 2015'''
         aug_4.date('1988')
 
 
-def test_month_day_dates(aug_4):
+def test_month_day_dates(aug_4, feb_29):
     assert list(aug_4.dates([])) == []
     assert list(aug_4.dates(range(1988, 1992))) == [
         datetime.date(1988, 8, 4),
         datetime.date(1989, 8, 4),
         datetime.date(1990, 8, 4),
         datetime.date(1991, 8, 4),
+    ]
+    years = range(2010, 2017)
+    with raises(ValueError):
+        list(feb_29.dates(years))
+    with raises(ValueError):
+        list(feb_29.dates(years, error_invalid_dates=True))
+    assert list(feb_29.dates(years, error_invalid_dates=False)) == [
+        datetime.date(2012, 2, 29), datetime.date(2016, 2, 29),
+    ]
+    assert list(feb_29.dates(years, error_invalid_dates=None)) == [
+        None, None, datetime.date(2012, 2, 29),
+        None, None, None, datetime.date(2016, 2, 29),
     ]
     with raises(TypeError):
         aug_4.dates(1988)
