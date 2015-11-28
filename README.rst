@@ -1,6 +1,14 @@
 ``monthday``
 ============
 
+.. image:: https://travis-ci.org/dahlia/monthday.svg?branch=master
+   :alt: Build Status
+   :target: https://travis-ci.org/dahlia/monthday
+
+.. image:: https://codecov.io/github/dahlia/monthday/coverage.svg?branch=master
+   :alt: Coverage Status
+   :target: https://codecov.io/github/dahlia/monthday?branch=master
+
 This package provides the ``MonthDay`` value type for dealing dates without
 year.  It is useful for dealing with birthdays, or anniversaries.
 
