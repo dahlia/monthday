@@ -80,6 +80,21 @@ class MonthDay(object):
         """Get a :class:`~datetime.date` by combining the given ``year``
         with it.
 
+        >>> MonthDay(12, 25).date(2015)
+        datetime.date(2015, 12, 25)
+
+        It may raise :exc:`ValueError` if February 29 is tried to be combined
+        with a non-leap year e.g.:
+
+        >>> feb_29 = MonthDay(2, 29)
+        >>> feb_29.date(2012)
+        datetime.date(2012, 2, 29)
+        >>> feb_29.date(2013)
+        Traceback (most recent call last):
+          ...
+        ValueError: since 2013 is not a leap year,
+                    monthday.MonthDay(2, 29) can't be combined with 2013
+
         :param year: a year to combine with
         :type year: :class:`numbers.Integral`
         :return: a :class:`datetime.date` with the given ``year``
