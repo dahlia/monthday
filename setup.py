@@ -3,10 +3,19 @@ from distutils.core import setup
 from monthday import __version__ as version
 
 
+def readme(filename):
+    try:
+        with open(filename) as f:
+            return f.read()
+    except IOError:
+        pass
+
+
 setup(
     name='monthday',
     version=version,
     description='Date without year',
+    long_description=readme('README.rst'),
     license='LGPLv3+',
     author='Hong Minhee',
     author_email='hongminhee' '@' 'member.fsf.org',
