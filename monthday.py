@@ -87,7 +87,13 @@ class MonthDay(object):
                            while it's ``MonthDay(2, 29)``
 
         """
-        return datetime.date(year, self.month, self.day)
+        try:
+            return datetime.date(year, self.month, self.day)
+        except ValueError:
+            if self.month == 2 and self.day == 29:
+                raise ValueError("since {0!r} is not a leap year, {1!r} can't "
+                                 "be combined with {0!r}".format(year, self))
+            raise
 
     def __str__(self):
         return '{0:02d}-{1:02d}'.format(self.month, self.day)

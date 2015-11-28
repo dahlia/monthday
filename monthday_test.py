@@ -103,9 +103,11 @@ def test_month_day_date():
     assert MonthDay(8, 4).date(1988) == datetime.date(1988, 8, 4)
     feb_29 = MonthDay(2, 29)
     assert feb_29.date(2016) == datetime.date(2016, 2, 29)
-    with raises(ValueError):
+    with raises(ValueError) as excinfo:
         feb_29.date(2015)
-    with raises(ValueError):
+    assert str(excinfo.value) == '''since 2015 is not a leap year, monthday.\
+MonthDay(2, 29) can't be combined with 2015'''
+    with raises(ValueError) as excinfo:
         feb_29.date(2014)
     with raises(ValueError):
         feb_29.date(2013)
