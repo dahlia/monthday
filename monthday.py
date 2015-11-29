@@ -8,7 +8,7 @@ import numbers
 
 
 __all__ = 'MonthDay', '__version__'
-__version__ = '0.9.0'
+__version__ = '0.9.1'
 
 
 class MonthDay(object):

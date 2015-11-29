@@ -4,6 +4,8 @@
 .. automodule:: monthday
    :members:
 
+.. include:: ../CHANGES.rst
+
 
 Indices and tables
 ==================
